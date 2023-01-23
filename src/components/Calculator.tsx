@@ -7,27 +7,17 @@ interface woltOrder {
   cartValue: number;
   deliveryDistance: number;
   numberOfItems: number;
+  orderItem: string;
 }
 
 const Calculator: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [order, setOrder] = useState<woltOrder>({
     cartValue: 0,
     deliveryDistance: 0,
     numberOfItems: 0,
+    orderItem: "",
   });
-
-  const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelectedDate(e.target.value);
-    const selectedDateObject = new Date(e.target.value);
-    const currentDate = new Date();
-    if (selectedDateObject < currentDate) {
-      setError("Selected date should be greater than or equal to today's date");
-    } else {
-      setError("");
-    }
-  };
 
   // clear
   const clearHandeler = () => {
@@ -35,9 +25,9 @@ const Calculator: React.FC = () => {
       cartValue: 0,
       deliveryDistance: 0,
       numberOfItems: 0,
+      orderItem: "",
     });
     setError("");
-    setSelectedDate("");
   };
 
   // input validator function
@@ -59,17 +49,14 @@ const Calculator: React.FC = () => {
 
   const handleCalculateClick = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const error1: string = validate(order);
+    setError("");
 
-    console.log(error.length);
-
-    if (error1 || error) {
+    const error: string = validate(order);
+    if (error) {
       setError(error);
       return;
     } else {
-      setError("");
       clearHandeler();
-
       console.log(order);
     }
   };
@@ -124,8 +111,10 @@ const Calculator: React.FC = () => {
           name="OrderTime"
           variant="outlined"
           fullWidth
-          onChange={handleDateChange}
-          value={selectedDate}
+          value={order.orderItem}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setOrder({ ...order, orderItem: e.target.value })
+          }
         />
         <Button
           variant="contained"
