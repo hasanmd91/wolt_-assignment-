@@ -1,86 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
 import { ChangeEvent, FormEvent } from "react";
 import { TextField, Button, Typography, Paper } from "@mui/material";
+import { deliveryDetails } from "./../Model";
 
-// this is interface
-interface woltOrder {
-  cartValue: number;
-  deliveryDistance: number;
-  numberOfItems: number;
-  orderItem: string;
+interface CalculatorProps {
+  orderDetails: deliveryDetails; //  object that contains the details of the order
+  errorMessage: string; // error message to be displayed if the form inputs are invalid
+  setOrderDetails: React.Dispatch<React.SetStateAction<deliveryDetails>>; // callback function to update the order details
+  handleCalculateClick: (e: FormEvent<HTMLFormElement>) => void; // callback function to handle the calculate button click event
+  clearOrderDetails: () => void; // callback function to clear the form inputs
 }
 
-const Calculator: React.FC = () => {
-  const [error, setError] = useState<string>("");
-  const [order, setOrder] = useState<woltOrder>({
-    cartValue: 0,
-    deliveryDistance: 0,
-    numberOfItems: 0,
-    orderItem: "",
-  });
-
-  // clear
-  const clearHandeler = () => {
-    setOrder({
-      cartValue: 0,
-      deliveryDistance: 0,
-      numberOfItems: 0,
-      orderItem: "",
-    });
-    setError("");
-  };
-
-  // input validator function
-
-  const validate = (order: woltOrder) => {
-    if (!order.cartValue) {
-      return "Invalid cart Value";
-    }
-    if (!order.deliveryDistance) {
-      return "Invalid distance";
-    }
-    if (!order.numberOfItems) {
-      return "Invalid number of Items";
-    }
-    return "";
-  };
-
-  // calculatin the deliverey price
-
-  const handleCalculateClick = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
-
-    const error: string = validate(order);
-    if (error) {
-      setError(error);
-      return;
-    } else {
-      clearHandeler();
-      console.log(order);
-    }
-  };
-
-  // render function
-
+const Calculator: React.FC<CalculatorProps> = ({
+  orderDetails,
+  errorMessage,
+  setOrderDetails,
+  handleCalculateClick,
+  clearOrderDetails,
+}) => {
   return (
     <Paper sx={{ maxWidth: "500px" }}>
-      <form autoComplete="off" onSubmit={handleCalculateClick}>
+      <form autoComplete="off" onSubmit={(e) => handleCalculateClick(e)}>
         <Typography variant="h6">Calculate the delivery fee </Typography>
-        <div>
-          <TextField
-            placeholder=" € "
-            type="number"
-            name="cartValue"
-            label="Cart Value"
-            variant="outlined"
-            fullWidth
-            value={order.cartValue === 0 ? "" : order.cartValue}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setOrder({ ...order, cartValue: +e.target.value })
-            }
-          />
-        </div>
+
+        <TextField
+          placeholder=" € "
+          type="number"
+          name="cartValue"
+          label="Cart Value"
+          variant="outlined"
+          fullWidth
+          value={orderDetails.cartValue === 0 ? "" : orderDetails.cartValue}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setOrderDetails({ ...orderDetails, cartValue: +e.target.value })
+          }
+        />
 
         <TextField
           placeholder="Meter"
@@ -89,9 +43,16 @@ const Calculator: React.FC = () => {
           label="Delivery Distance"
           variant="outlined"
           fullWidth
-          value={order.deliveryDistance === 0 ? "" : order.deliveryDistance}
+          value={
+            orderDetails.deliveryDistance === 0
+              ? ""
+              : orderDetails.deliveryDistance
+          }
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setOrder({ ...order, deliveryDistance: +e.target.value })
+            setOrderDetails({
+              ...orderDetails,
+              deliveryDistance: +e.target.value,
+            })
           }
         />
         <TextField
@@ -100,9 +61,11 @@ const Calculator: React.FC = () => {
           label="Number of Items"
           variant="outlined"
           fullWidth
-          value={order.numberOfItems === 0 ? "" : order.numberOfItems}
+          value={
+            orderDetails.numberOfItems === 0 ? "" : orderDetails.numberOfItems
+          }
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setOrder({ ...order, numberOfItems: +e.target.value })
+            setOrderDetails({ ...orderDetails, numberOfItems: +e.target.value })
           }
         />
         <TextField
@@ -111,11 +74,12 @@ const Calculator: React.FC = () => {
           name="OrderTime"
           variant="outlined"
           fullWidth
-          value={order.orderItem}
+          value={orderDetails.orderTime}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setOrder({ ...order, orderItem: e.target.value })
+            setOrderDetails({ ...orderDetails, orderTime: e.target.value })
           }
         />
+
         <Button
           variant="contained"
           color="primary"
@@ -133,15 +97,16 @@ const Calculator: React.FC = () => {
           size="small"
           fullWidth
           sx={{ marginBottom: "10px" }}
-          onClick={clearHandeler}
+          onClick={clearOrderDetails}
         >
           {" "}
           Clear
         </Button>
       </form>
-      {error && (
+
+      {errorMessage && (
         <Typography padding={2} sx={{ color: "red", textAlign: "center" }}>
-          {error}{" "}
+          {errorMessage}{" "}
         </Typography>
       )}
     </Paper>
