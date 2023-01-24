@@ -2,6 +2,8 @@ import React from "react";
 import { ChangeEvent, FormEvent } from "react";
 import { TextField, Button, Typography, Paper } from "@mui/material";
 import { deliveryDetails } from "./../Model";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface CalculatorProps {
   orderDetails: deliveryDetails; //  object that contains the details of the order
@@ -9,6 +11,8 @@ interface CalculatorProps {
   setOrderDetails: React.Dispatch<React.SetStateAction<deliveryDetails>>; // callback function to update the order details
   handleCalculateClick: (e: FormEvent<HTMLFormElement>) => void; // callback function to handle the calculate button click event
   clearOrderDetails: () => void; // callback function to clear the form inputs
+  orderDate: Date;
+  setOrderDate: React.Dispatch<React.SetStateAction<Date>>;
 }
 
 const Calculator: React.FC<CalculatorProps> = ({
@@ -17,6 +21,8 @@ const Calculator: React.FC<CalculatorProps> = ({
   setOrderDetails,
   handleCalculateClick,
   clearOrderDetails,
+  orderDate,
+  setOrderDate,
 }) => {
   return (
     <Paper elevation={4} sx={{ maxWidth: "500px", minHeight: "500px", m: 2 }}>
@@ -75,16 +81,12 @@ const Calculator: React.FC<CalculatorProps> = ({
             setOrderDetails({ ...orderDetails, numberOfItems: +e.target.value })
           }
         />
-        <TextField
-          required
-          type="date"
-          name="OrderTime"
-          variant="outlined"
-          fullWidth
-          value={orderDetails.orderTime}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setOrderDetails({ ...orderDetails, orderTime: e.target.value })
-          }
+
+        <DatePicker
+          selected={orderDate}
+          onChange={(date: Date) => setOrderDate(date)}
+          minDate={new Date()}
+          className="custom-datepicker"
         />
 
         <Button

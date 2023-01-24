@@ -9,6 +9,7 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
+  box-sizing: border-box;
 }
 
 form {
@@ -17,4 +18,15 @@ form {
   flex-direction: column;
   gap: 15px;
   padding: 10px;
+}
+
+.custom-datepicker {
+  width: 50%;
+  height: 40px;
+  padding-left: 12px;
+
+  font-family: "Poppins", sans-serif;
+  border-radius: 3px;
+  border: 1px solid rgb(197, 193, 193);
+  font-weight: 400;
 }
