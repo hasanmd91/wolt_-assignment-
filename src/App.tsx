@@ -123,7 +123,7 @@ const App: React.FC = () => {
         orderDate={orderDate}
         setOrderDate={setOrderDate}
       />
-      {deliveryCost > 0 && <Modal deliveryCost={deliveryCost} />}
+      <Modal deliveryCost={deliveryCost} />
     </Container>
   );
 };

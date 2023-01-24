@@ -21,9 +21,7 @@ const Modal: React.FC<PropsdeliveryCost> = ({ deliveryCost }) => {
       >
         <Typography sx={{ padding: "10px", fontWeight: 600 }}>
           Deleivery Cost:{" "}
-          <span style={{ color: "rgb(0, 157, 224, 1)" }}>
-            {deliveryCost === 0 ? "" : `${deliveryCost} €`}
-          </span>
+          <span style={{ color: "rgb(0, 157, 224, 1)" }}>{deliveryCost} €</span>
         </Typography>
       </Paper>
     </Grow>

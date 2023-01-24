@@ -21,12 +21,17 @@ form {
 }
 
 .custom-datepicker {
-  width: 50%;
-  height: 40px;
+  width: 96%;
+  height: 50px;
   padding-left: 12px;
-
   font-family: "Poppins", sans-serif;
   border-radius: 3px;
   border: 1px solid rgb(197, 193, 193);
   font-weight: 400;
+  outline: none;
+}
+
+.custom-datepicker:focus {
+  outline: none;
+  border: 2px solid rgb(2, 147, 209);
 }
