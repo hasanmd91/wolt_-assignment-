@@ -69,7 +69,6 @@ const Calculator: React.FC<CalculatorProps> = ({
           }
         />
         <TextField
-          required
           type="date"
           name="OrderTime"
           variant="outlined"
@@ -88,7 +87,7 @@ const Calculator: React.FC<CalculatorProps> = ({
           sx={{ marginBottom: "10px" }}
           type="submit"
         >
-          Calculate Delipery Price{" "}
+          Calculate Delivery Price{" "}
         </Button>
 
         <Button
