@@ -37,7 +37,7 @@ const Calculator: React.FC<CalculatorProps> = ({
         />
 
         <TextField
-          placeholder="Meter"
+          placeholder="Max 20000 meter"
           type="number"
           name="deliveryDistance"
           label="Delivery Distance"
@@ -48,13 +48,18 @@ const Calculator: React.FC<CalculatorProps> = ({
               ? ""
               : orderDetails.deliveryDistance
           }
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setOrderDetails({
-              ...orderDetails,
-              deliveryDistance: +e.target.value,
-            })
-          }
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            let val = +e.target.value;
+            //Limiting the distance within 20km
+            if (val < 20000) {
+              setOrderDetails({
+                ...orderDetails,
+                deliveryDistance: val,
+              });
+            }
+          }}
         />
+
         <TextField
           type="number"
           name="numberOfItems"
@@ -69,6 +74,7 @@ const Calculator: React.FC<CalculatorProps> = ({
           }
         />
         <TextField
+          required
           type="date"
           name="OrderTime"
           variant="outlined"
@@ -87,7 +93,7 @@ const Calculator: React.FC<CalculatorProps> = ({
           sx={{ marginBottom: "10px" }}
           type="submit"
         >
-          Calculate Delivery Price{" "}
+          Calculate Price{" "}
         </Button>
 
         <Button
