@@ -1,4 +1,4 @@
-import { Paper, Typography, Grow, Button } from "@mui/material";
+import { Paper, Typography, Grow } from "@mui/material";
 import React from "react";
 
 interface PropsdeliveryCost {
@@ -6,7 +6,6 @@ interface PropsdeliveryCost {
 }
 
 const Modal: React.FC<PropsdeliveryCost> = ({ deliveryCost }) => {
-  console.log(deliveryCost);
   return (
     <Grow in>
       <Paper

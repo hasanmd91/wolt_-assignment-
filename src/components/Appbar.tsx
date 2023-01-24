@@ -15,6 +15,7 @@ const Appbar: React.FC = () => {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
+        marginBottom: 10,
       }}
     >
       <Typography

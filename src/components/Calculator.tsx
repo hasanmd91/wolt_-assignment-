@@ -21,7 +21,9 @@ const Calculator: React.FC<CalculatorProps> = ({
   return (
     <Paper elevation={4} sx={{ maxWidth: "500px", minHeight: "500px", m: 2 }}>
       <form autoComplete="off" onSubmit={(e) => handleCalculateClick(e)}>
-        <Typography variant="h6">Calculate the delivery fee </Typography>
+        <Typography variant="h6" sx={{ color: "rgb(0, 157, 224, 1)" }}>
+          Calculate Delivery Fee{" "}
+        </Typography>
 
         <TextField
           placeholder=" € "
