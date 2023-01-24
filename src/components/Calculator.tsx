@@ -19,7 +19,7 @@ const Calculator: React.FC<CalculatorProps> = ({
   clearOrderDetails,
 }) => {
   return (
-    <Paper sx={{ maxWidth: "500px" }}>
+    <Paper elevation={4} sx={{ maxWidth: "500px", minHeight: "500px", m: 2 }}>
       <form autoComplete="off" onSubmit={(e) => handleCalculateClick(e)}>
         <Typography variant="h6">Calculate the delivery fee </Typography>
 
@@ -87,10 +87,9 @@ const Calculator: React.FC<CalculatorProps> = ({
 
         <Button
           variant="contained"
-          color="primary"
           size="large"
           fullWidth
-          sx={{ marginBottom: "10px" }}
+          sx={{ marginBottom: "10px", backgroundColor: "rgb(0, 157, 224, 1)" }}
           type="submit"
         >
           Calculate Price{" "}
@@ -98,10 +97,9 @@ const Calculator: React.FC<CalculatorProps> = ({
 
         <Button
           variant="contained"
-          color="secondary"
           size="small"
           fullWidth
-          sx={{ marginBottom: "10px" }}
+          sx={{ marginBottom: "10px", backgroundColor: "rgb(0, 157, 224, 1)" }}
           onClick={clearOrderDetails}
         >
           {" "}

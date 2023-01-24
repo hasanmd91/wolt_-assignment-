@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { FormEvent } from "react";
 import { deliveryDetails } from "./Model";
 import Calculator from "./components/Calculator";
-import { Stack } from "@mui/material";
-import { parse } from "node:path/win32";
+import { AppBar, Stack } from "@mui/material";
+import Modal from "./components/Modal";
+import Appbar from "./components/Appbar";
+import { Container } from "@mui/system";
 
 const App: React.FC = () => {
   // State to store error message
@@ -19,8 +21,8 @@ const App: React.FC = () => {
   // State to calculate the delivery details
   const [deliveryCost, setDeliveryCost] = useState<number>(0);
 
-  const calculateDeliveryCost = () => {
-    let cost = 0;
+  const calculateDeliveryCost = (): void => {
+    let cost: number = 0;
     // Small order surcharge
     if (orderDetails.cartValue < 10) {
       cost += 10 - orderDetails.cartValue;
@@ -44,10 +46,10 @@ const App: React.FC = () => {
 
     //Rush hour delivery surcharge
 
-    let newDate = new Date(orderDetails.orderTime);
+    let newDate: Date = new Date(orderDetails.orderTime);
     // checks if the day is Friday
     if (newDate.getUTCDay() === 5) {
-      let orderHour = newDate.getUTCHours();
+      let orderHour: number = newDate.getUTCHours();
       if (orderHour >= 15 && orderHour <= 19) {
         cost *= 1.2;
       }
@@ -108,7 +110,8 @@ const App: React.FC = () => {
   };
 
   return (
-    <Stack>
+    <Container maxWidth="lg">
+      <Appbar />
       <Calculator
         orderDetails={orderDetails}
         errorMessage={errorMessage}
@@ -116,7 +119,8 @@ const App: React.FC = () => {
         handleCalculateClick={handleCalculateClick}
         clearOrderDetails={clearOrderDetails}
       />
-    </Stack>
+      {deliveryCost > 0 && <Modal deliveryCost={deliveryCost} />}
+    </Container>
   );
 };
 
