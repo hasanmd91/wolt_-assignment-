@@ -13,6 +13,8 @@ interface CalculatorProps {
   clearOrderDetails: () => void; // callback function to clear the form inputs
   orderDate: Date;
   setOrderDate: React.Dispatch<React.SetStateAction<Date>>;
+  setModalIsOn: React.Dispatch<React.SetStateAction<boolean>>;
+  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Calculator: React.FC<CalculatorProps> = ({
@@ -23,7 +25,27 @@ const Calculator: React.FC<CalculatorProps> = ({
   clearOrderDetails,
   orderDate,
   setOrderDate,
+  setModalIsOn,
+  setErrorMessage,
 }) => {
+  // input change events handeler function
+  const InputChangeHandeler = (e: ChangeEvent<HTMLInputElement>) => {
+    setModalIsOn(false);
+    setErrorMessage("");
+    if (e.target.name === "deliveryDistance") {
+      let val = +e.target.value;
+      //Limiting the distance within 20km
+      if (val <= 20000) {
+        setOrderDetails({
+          ...orderDetails,
+          deliveryDistance: val,
+        });
+      }
+    } else {
+      setOrderDetails({ ...orderDetails, [e.target.name]: +e.target.value });
+    }
+  };
+
   return (
     <Paper elevation={4} sx={{ maxWidth: "500px", minHeight: "500px", m: 2 }}>
       <form autoComplete="off" onSubmit={(e) => handleCalculateClick(e)}>
@@ -39,9 +61,7 @@ const Calculator: React.FC<CalculatorProps> = ({
           variant="outlined"
           fullWidth
           value={orderDetails.cartValue === 0 ? "" : orderDetails.cartValue}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setOrderDetails({ ...orderDetails, cartValue: +e.target.value })
-          }
+          onChange={InputChangeHandeler}
         />
 
         <TextField
@@ -56,16 +76,7 @@ const Calculator: React.FC<CalculatorProps> = ({
               ? ""
               : orderDetails.deliveryDistance
           }
-          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            let val = +e.target.value;
-            //Limiting the distance within 20km
-            if (val < 20000) {
-              setOrderDetails({
-                ...orderDetails,
-                deliveryDistance: val,
-              });
-            }
-          }}
+          onChange={InputChangeHandeler}
         />
 
         <TextField
@@ -77,9 +88,7 @@ const Calculator: React.FC<CalculatorProps> = ({
           value={
             orderDetails.numberOfItems === 0 ? "" : orderDetails.numberOfItems
           }
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setOrderDetails({ ...orderDetails, numberOfItems: +e.target.value })
-          }
+          onChange={InputChangeHandeler}
         />
 
         <DatePicker

@@ -4,13 +4,14 @@ import { deliveryDetails } from "./Model";
 import Calculator from "./components/Calculator";
 import Modal from "./components/Modal";
 import Appbar from "./components/Appbar";
-import { Container } from "@mui/system";
+import { Container } from "@mui/material";
 
 const App: React.FC = () => {
   // satte tp store the date
   const [orderDate, setOrderDate] = useState(new Date());
   // State to store error message
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [modalIsOn, setModalIsOn] = useState<boolean>(false);
   // State to store order details
   const [orderDetails, setOrderDetails] = useState<deliveryDetails>({
     cartValue: 0,
@@ -82,6 +83,7 @@ const App: React.FC = () => {
     }
     clearOrderDetails();
     calculateDeliveryCost();
+    setModalIsOn(true);
   };
 
   // validate order details
@@ -109,6 +111,7 @@ const App: React.FC = () => {
     });
     setErrorMessage("");
     setDeliveryCost(0);
+    setModalIsOn(false);
   };
 
   return (
@@ -122,8 +125,10 @@ const App: React.FC = () => {
         clearOrderDetails={clearOrderDetails}
         orderDate={orderDate}
         setOrderDate={setOrderDate}
+        setModalIsOn={setModalIsOn}
+        setErrorMessage={setErrorMessage}
       />
-      <Modal deliveryCost={deliveryCost} />
+      {modalIsOn && <Modal deliveryCost={deliveryCost} />}
     </Container>
   );
 };
