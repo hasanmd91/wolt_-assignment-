@@ -109,7 +109,9 @@ const App: React.FC = () => {
       deliveryDistance: 0,
       numberOfItems: 0,
     });
+
     setErrorMessage("");
+    setOrderDate(new Date());
     setDeliveryCost(0);
     setModalIsOn(false);
   };
