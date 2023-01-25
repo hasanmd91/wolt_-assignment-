@@ -89,13 +89,13 @@ const App: React.FC = () => {
   // validate order details
 
   const validateOrderDetails = (order: deliveryDetails): string => {
-    if (!order.cartValue) {
+    if (!order.cartValue || order.cartValue < 0) {
       return "Invalid cart Value";
     }
-    if (!order.deliveryDistance) {
+    if (!order.deliveryDistance || order.deliveryDistance < 0) {
       return "Invalid distance";
     }
-    if (!order.numberOfItems) {
+    if (!order.numberOfItems || order.numberOfItems < 0) {
       return "Invalid number of Items";
     }
     return "";
