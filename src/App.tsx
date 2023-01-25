@@ -67,7 +67,7 @@ const App: React.FC = () => {
       cost = 0;
     }
     cost = parseFloat(cost.toFixed(2));
-    setDeliveryCost(cost);
+    setDeliveryCost(cost as number);
   };
 
   // Handle calculate button click
@@ -78,7 +78,7 @@ const App: React.FC = () => {
 
     const err: string = validateOrderDetails(orderDetails);
     if (err) {
-      setErrorMessage(err);
+      setErrorMessage(err as string);
       return;
     }
     clearOrderDetails();
@@ -103,7 +103,7 @@ const App: React.FC = () => {
 
   // Clear order details and error message
 
-  const clearOrderDetails = () => {
+  const clearOrderDetails = (): void => {
     setOrderDetails({
       cartValue: 0,
       deliveryDistance: 0,
