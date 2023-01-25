@@ -12,7 +12,7 @@ const Modal: React.FC<PropsdeliveryCost> = ({ deliveryCost }) => {
         elevation={4}
         sx={{
           height: "100px",
-          maxWidth: "500px",
+          maxWidth: "400px",
           justifyContent: "center",
           alignItems: "center",
           display: "flex",
